@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
+     <!-- Font Awesome CSS Icons-->
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        rel="stylesheet" 
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" 
+        crossorigin="anonymous"/>
+    <!-- referrence for the html style    -->
+    <link rel="stylesheet" href="./style.css" />
+    <title>Weather Forecast Application</title>
+  </head>
+
+  <body>
+      <div class="container"> 
+
+        <header class="jumbotron">
+             <h1 class="text-center">Weather Forecast Dashboard</h1>
+        </header>
+        <div class="row">
+            <section class="search col-4">
+                <div class="container">
+                    <h4>City Search</h4>
+                    <form class="row">
+                        <input type="search" name="city" class="col-10" id="city">
+                        <input type="submit" value="SUBMIT" class="col-6" id="submitBtn">
+                        <span class="message"></span>
+                    </form>
+                    <ul class="cities"></ul>
+                </div>
+            </section>
+        
+            <section class="weatherDisplay col-8">
+                <div class="row">
+                    <p class="cityName"></p>
+                    <div class="col-3 weatherDetail">
+                        <p>Temperature: </p>
+                        <p>Humidity: </p>
+                    </div>
+                    <div class="col-9 weatherDetail">
+                        <p>Temperature: </p>
+                    </div>
+                </div>
+                <div class="row">
+    
+                </div>
+        
+            </section>
+        </div>
+        
+
+    </div>
+
+
+    <!-- jQuery JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <!-- code to the javascript file -->
+    <script src="./script.js"></script>
+  </body>
+</html>
