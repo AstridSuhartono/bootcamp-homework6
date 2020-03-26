@@ -21,24 +21,12 @@ $(document).ready(function() {
 
         renderSearchList()
     }
-
-    function cityQueryURL(){
-        if ( $("#city").val() == null ){
-        }else{
-            var city = $("#city").val().trim();
-        }
- 
-        let cityTypeURL = "https://api.openweathermap.org/data/2.5/weather?q="+city;
-        let queryURL = cityTypeURL+"&units=metric&appid="+APIkey;
-        return queryURL;
-    }
  
     function renderSearchList(){
         $(".cities").empty();
-
         for(var i = 0; i < citiesArray.length; i++){
             var city = citiesArray[i];
-            var cityListItem = $("<li>").text(city);
+            let cityListItem = $("<button>").addClass("btn btn-block btn-outline-light citylist").text(city);
             $(".cities").append(cityListItem);
         }
     }
@@ -49,6 +37,11 @@ $(document).ready(function() {
         $(".cityTemp").text(JSON.stringify(response.main.temp));
         $(".cityHumid").text(JSON.stringify(response.main.humidity));
         $(".cityWind").text(JSON.stringify(response.wind.speed));
+
+        $(".cityWeather").text(JSON.stringify(response.weather[0].description));
+        let iconCode = JSON.stringify(response.weather[0].icon);
+        console.log(iconCode);
+        createWeatherIcon(iconCode);
 
         let lat = response.coord.lat;
         let lon = response.coord.lon;
@@ -63,6 +56,13 @@ $(document).ready(function() {
             });
     }
 
+    function createWeatherIcon(iconCode){
+        clearIconCode = iconCode.slice(1, -1);
+        let iconURL = "https://openweathermap.org/img/wn/"+clearIconCode+"@2x.png"
+        console.log(iconURL);
+        $(".cityIcon").attr("src", iconURL);
+    }
+
     function storeCities(){
         localStorage.setItem("cities", JSON.stringify(citiesArray));
     }
@@ -70,12 +70,14 @@ $(document).ready(function() {
 
     $("#submitBtn").on("click",function(event){
         event.preventDefault();
-        let queryURL = cityQueryURL();
-
+        if ($("#city").val() === null){
+            alert("Please enter a city")
+        }
         let city = $("#city").val().trim().toUpperCase();
-        citiesArray.push(city);
-        $("#city").empty();
+        let queryURL = "https://api.openweathermap.org/data/2.5/weather?q="+city+"&units=metric&appid="+APIkey;
 
+        citiesArray.push(city);
+        $("#city").val("");
         storeCities();
         renderSearchList();
     
@@ -87,6 +89,27 @@ $(document).ready(function() {
 
     })
     
-   
+    $("#clearBtn").on("click",function(event){
+        event.preventDefault();
+        $(".cities").empty();
+        $("#city").val("");
+        localStorage.clear();
+        citiesArray = new Array();
+        storeCities();
+    }) 
+
+    $(".citylist").on("click",function(event){
+        event.preventDefault();
+        let city = $(this).text();
+        let queryURL = "https://api.openweathermap.org/data/2.5/weather?q="+city+"&units=metric&appid="+APIkey;
+
+        // Make the AJAX request to the API - GETs the JSON data at the queryURL.
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+            }).then(populateWeatherDetail);
+
+    })
+    
 
 });

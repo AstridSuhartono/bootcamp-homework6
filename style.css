@@ -2,7 +2,7 @@ body{
     background-color: #191919 ;
     color: #d6d6d6;
 }
-.main {
+.main{
     background-image: url("background.jpg");
     background-repeat: no-repeat;
     background-size: cover;
@@ -10,4 +10,8 @@ body{
     border-radius: 30px;
     box-shadow:  -20px -20px 40px #0a0a0a, 
     20px 20px 40px #282828;
+}
+
+.btn{
+    margin-top: 1rem;
 }

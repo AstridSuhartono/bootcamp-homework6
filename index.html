@@ -31,11 +31,13 @@
                     <h4>City Search</h4>
                     <!-- form to capture city name input -->
                     <form class="row">
-                        <input type="search" name="city" class="col-10" id="city">
-                        <input type="submit" value="SUBMIT" class="col-6 btn-dark" id="submitBtn">
+                        <input type="search" name="city" class="col-12" id="city">
+                        <input type="submit" value="SUBMIT" class="btn btn-block btn-dark" id="submitBtn">
+                        <input type="submit" value="CLEAR" class="btn btn-block btn-dark" id="clearBtn"></input>
                     </form>
                     <!-- table to display cities choosen-->
-                    <ul class="cities"></ul>
+                    <p class="cities"></p>
+                   
                 </div>
             </section>
             
@@ -54,11 +56,15 @@
                         <p>Wind Speed: </p>
                         <p>UV Index: </p>
                     </div>
-                    <div class="col-8 detail">
+                    <div class="col-4 detail">
                         <p class="cityTemp"> -- </p>
                         <p class="cityHumid"> -- </p>
                         <p class="cityWind"> -- </p>
                         <p class="cityUV"> -- </p>
+                    </div>
+                    <div class="col-4">
+                        <p class="cityWeather"> -- </p>
+                        <img class="cityIcon" src=""/>
                     </div>
                 </div>
                 
@@ -66,13 +72,10 @@
                 <div class="row">
                     <div class="card-group mr-5 mb-3">
                         <div class="card">
-                          <img class="card-img-top" src="..." alt="Card image cap">
-                          <div class="card-body">
+                          <img class="card-img" src="card-bg.jpg" alt="Card image">
+                          <div class="card-img-overlay">
                             <h5 class="card-title">Card title</h5>
                             <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                          </div>
-                          <div class="card-footer">
-                            <small class="text-muted">Last updated 3 mins ago</small>
                           </div>
                         </div>
                         <div class="card">
