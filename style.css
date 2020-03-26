@@ -1,0 +1,13 @@
+body{
+    background-color: #040c4a ;
+    color: #d6d6d6;
+}
+.main {
+    background-image: url("background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    border-radius: 20px;
+    box-shadow:  -20px -20px 60px #040d6b, 
+             20px 20px 60px #061191;
+}
