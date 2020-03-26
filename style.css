@@ -1,5 +1,5 @@
 body{
-    background-color: #040c4a ;
+    background-color: #191919 ;
     color: #d6d6d6;
 }
 .main {
@@ -7,7 +7,7 @@ body{
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    border-radius: 20px;
-    box-shadow:  -20px -20px 60px #040d6b, 
-             20px 20px 60px #061191;
+    border-radius: 30px;
+    box-shadow:  -20px -20px 40px #0a0a0a, 
+    20px 20px 40px #282828;
 }
