@@ -1,6 +1,7 @@
 $(document).ready(function() {
 
     var citiesArray = [];
+    const APIkey = "4ee5795f0338dedf641f1c65d49e8b9c";
 
     // Show current day
     var today = moment().format('Do MMMM YYYY');
@@ -22,14 +23,12 @@ $(document).ready(function() {
     }
 
     function cityQueryURL(){
-        if ( $("#city") == null){
-            $(".message").text() = "Please enter a city name"
+        if ( $("#city").val() == null ){
         }else{
             var city = $("#city").val().trim();
         }
  
         let cityTypeURL = "https://api.openweathermap.org/data/2.5/weather?q="+city;
-        let APIkey = "4ee5795f0338dedf641f1c65d49e8b9c";
         let queryURL = cityTypeURL+"&units=metric&appid="+APIkey;
         return queryURL;
     }
@@ -42,17 +41,26 @@ $(document).ready(function() {
             var cityListItem = $("<li>").text(city);
             $(".cities").append(cityListItem);
         }
-        
-
     }
 
     function populateWeatherDetail(response){
         console.log(response);
-        $(".cityName").text(JSON.stringify(response.name));
+        $(".cityName").text(JSON.stringify(response.name)+" , "+JSON.stringify(response.sys.country));
         $(".cityTemp").text(JSON.stringify(response.main.temp));
         $(".cityHumid").text(JSON.stringify(response.main.humidity));
         $(".cityWind").text(JSON.stringify(response.wind.speed));
 
+        let lat = response.coord.lat;
+        let lon = response.coord.lon;
+
+        var uvURL = "https://api.openweathermap.org/data/2.5/uvi?appid="+APIkey+"&lat="+lat+"&lon="+lon;
+        $.ajax({
+            url: uvURL,
+            method: "GET"
+            }).then(function(response){
+                console.log(response);
+                $(".cityUV").text(JSON.stringify(response.value));
+            });
     }
 
     function storeCities(){
