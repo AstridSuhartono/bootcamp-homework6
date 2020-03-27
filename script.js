@@ -34,10 +34,10 @@ $(document).ready(function() {
     function populateWeatherDetail(response){
         //console.log(response);
         $(".cityName").text(JSON.stringify(response.name)+" , "+JSON.stringify(response.sys.country));
-        $(".cityTemp").text(JSON.stringify(response.main.temp)+" C");
-        $(".cityHiLowTemp").text(JSON.stringify(response.main.temp_max)+" / "+JSON.stringify(response.main.temp_min))
-        $(".cityHumid").text(JSON.stringify(response.main.humidity));
-        $(".cityWind").text(JSON.stringify(response.wind.speed));
+        $(".cityTemp").text(JSON.stringify(response.main.temp)+"\xB0C");
+        $(".cityHiLowTemp").text(JSON.stringify(response.main.temp_max)+"\xB0C / "+JSON.stringify(response.main.temp_min)+"\xB0C")
+        $(".cityHumid").text(JSON.stringify(response.main.humidity)+"%");
+        $(".cityWind").text(JSON.stringify(response.wind.speed)+"meter/sec , " +JSON.stringify(response.wind.deg)+" degrees");
         $(".cityWeather").text(JSON.stringify(response.weather[0].description));
         let iconCode = JSON.stringify(response.weather[0].icon);
         //console.log(iconCode);
@@ -52,7 +52,9 @@ $(document).ready(function() {
             method: "GET"
             }).then(function(response){
                 //console.log(response);
-                $(".cityUV").text(JSON.stringify(response.value));
+                let uvi = JSON.stringify(response.value)
+                $(".cityUV").text(uvi);
+                createUvLevel(uvi);
             });
     }
 
@@ -62,6 +64,22 @@ $(document).ready(function() {
         //console.log(iconURL);
         $(".cityIcon").attr("src", iconURL);
     }
+
+    function createUvLevel(uvIndex){
+        if (uvIndex >= 11){
+            $(".uvLevel").text("EXTREME").css("background-color","#B705B7")
+        }
+        else if (uvIndex >= 8){
+            $(".uvLevel").text("VERY HIGH").css("background-color","#F80101")
+        }else if (uvIndex >=6 ){
+            $(".uvLevel").text("HIGH").css("background-color","#FC840C")
+        }else if (uvIndex >=3 ){
+            $(".uvLevel").text("MODERATE").css("background-color","#FCFC0C")
+        }else{
+            $(".uvLevel").text("LOW").css("background-color","#108810")
+        }
+    }
+
 
     function storeCities(){
         localStorage.setItem("cities", JSON.stringify(citiesArray));
