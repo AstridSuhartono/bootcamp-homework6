@@ -32,15 +32,15 @@ $(document).ready(function() {
     }
 
     function populateWeatherDetail(response){
-        console.log(response);
+        //console.log(response);
         $(".cityName").text(JSON.stringify(response.name)+" , "+JSON.stringify(response.sys.country));
-        $(".cityTemp").text(JSON.stringify(response.main.temp));
+        $(".cityTemp").text(JSON.stringify(response.main.temp)+" C");
+        $(".cityHiLowTemp").text(JSON.stringify(response.main.temp_max)+" / "+JSON.stringify(response.main.temp_min))
         $(".cityHumid").text(JSON.stringify(response.main.humidity));
         $(".cityWind").text(JSON.stringify(response.wind.speed));
-
         $(".cityWeather").text(JSON.stringify(response.weather[0].description));
         let iconCode = JSON.stringify(response.weather[0].icon);
-        console.log(iconCode);
+        //console.log(iconCode);
         createWeatherIcon(iconCode);
 
         let lat = response.coord.lat;
@@ -51,7 +51,7 @@ $(document).ready(function() {
             url: uvURL,
             method: "GET"
             }).then(function(response){
-                console.log(response);
+                //console.log(response);
                 $(".cityUV").text(JSON.stringify(response.value));
             });
     }
@@ -59,7 +59,7 @@ $(document).ready(function() {
     function createWeatherIcon(iconCode){
         clearIconCode = iconCode.slice(1, -1);
         let iconURL = "https://openweathermap.org/img/wn/"+clearIconCode+"@2x.png"
-        console.log(iconURL);
+        //console.log(iconURL);
         $(".cityIcon").attr("src", iconURL);
     }
 
