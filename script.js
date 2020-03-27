@@ -2,24 +2,23 @@ $(document).ready(function() {
 
     var citiesArray = [];
     const APIkey = "4ee5795f0338dedf641f1c65d49e8b9c";
+    const openweatherURL = "https://api.openweathermap.org/data/2.5/";
 
     init();
 
     function init(){
         var storedCities = JSON.parse(localStorage.getItem("cities"));
-        updateDate();
-
+        renderDate();
         if(storedCities !== null){
             citiesArray = storedCities;
         }else{
             citiesArray = new Array();
             storeCities();
         }
-
         renderSearchList()
     }
 
-    function updateDate(){
+    function renderDate(){
         // Show current day
         var today = moment().format('Do MMMM YYYY');
         $(".date0").text(today);
@@ -56,7 +55,7 @@ $(document).ready(function() {
         let lat = response.coord.lat;
         let lon = response.coord.lon;
 
-        var uvURL = "https://api.openweathermap.org/data/2.5/uvi?appid="+APIkey+"&lat="+lat+"&lon="+lon;
+        var uvURL = openweatherURL+"uvi?appid="+APIkey+"&lat="+lat+"&lon="+lon;
         $.ajax({
             url: uvURL,
             method: "GET"
@@ -112,8 +111,8 @@ $(document).ready(function() {
             alert("Please enter a city")
         }
         let city = $("#city").val().trim().toUpperCase();
-        let queryURL = "https://api.openweathermap.org/data/2.5/weather?q="+city+"&units=metric&appid="+APIkey;
-        var forecastURL = "https://api.openweathermap.org/data/2.5/forecast?q="+city+"&units=metric&appid="+APIkey;
+        let queryURL = openweatherURL+"weather?q="+city+"&units=metric&appid="+APIkey;
+        var forecastURL = openweatherURL+"forecast?q="+city+"&units=metric&appid="+APIkey;
         citiesArray.push(city);
         $("#city").val("");
         storeCities();
@@ -132,15 +131,6 @@ $(document).ready(function() {
 
     })
     
-    $("#clearBtn").on("click",function(event){
-        event.preventDefault();
-        $(".cities").empty();
-        $("#city").val("");
-        localStorage.clear();
-        citiesArray = new Array();
-        storeCities();
-    }) 
-
     $(".citylist").on("click",function(event){
         event.preventDefault();
         let city = $(this).text();
@@ -156,9 +146,16 @@ $(document).ready(function() {
             url: forecastURL,
             method: "GET"
             }).then(populateWeatherForecast);
-
-
     })
-    
+
+    $("#clearBtn").on("click",function(event){
+        event.preventDefault();
+        $(".cities").empty();
+        $("#city").val("");
+        localStorage.clear();
+        citiesArray = new Array();
+        storeCities();
+    }) 
+
 
 });
