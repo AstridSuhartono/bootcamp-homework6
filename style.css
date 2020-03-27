@@ -15,3 +15,15 @@ body{
 .btn{
     margin-top: 1rem;
 }
+
+.card{
+    background-color: #322ac0;
+    text-align: center;
+    width: 14rem;
+    min-width: 10rem;
+    padding: 0%;
+}
+
+.card-img-top{
+    height: 5rem;
+}
