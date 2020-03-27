@@ -22,15 +22,13 @@ $(document).ready(function() {
     function updateDate(){
         // Show current day
         var today = moment().format('Do MMMM YYYY');
-        var today_1 = moment().add(1,'days').format('Do MMMM YYYY')
-        var today_2 = moment().add(2,'days').format('Do MMMM YYYY')
-        var today_3 = moment().add(3,'days').format('Do MMMM YYYY')
-        var today_4 = moment().add(4,'days').format('Do MMMM YYYY')
         $(".date0").text(today);
-        $(".date1").text(today_1);
-        $(".date2").text(today_2);
-        $(".date3").text(today_3);
-        $(".date4").text(today_4);
+        let dayArray = []
+        for (i = 1 ;  i < 5 ; i++){
+            dayArray[i] = moment().add(i,'days').format('Do MMMM YYYY');
+            $(".date"+i).text(dayArray[i]);
+        }
+       
     }
 
     function renderSearchList(){
@@ -80,9 +78,7 @@ $(document).ready(function() {
             let iconURL =  createWeatherIcon(iconCode);
             $(".card-img"+index).attr("src", iconURL);
             index ++;
-    
-        }
-        
+        }  
     }
 
     function createWeatherIcon(iconCode){
@@ -95,8 +91,7 @@ $(document).ready(function() {
     function createUvLevel(uvIndex){
         if (uvIndex >= 11){
             $(".uvLevel").text("EXTREME").css("background-color","#B705B7")
-        }
-        else if (uvIndex >= 8){
+        }else if (uvIndex >= 8){
             $(".uvLevel").text("VERY HIGH").css("background-color","#F80101")
         }else if (uvIndex >=6 ){
             $(".uvLevel").text("HIGH").css("background-color","#FC840C")
@@ -107,11 +102,9 @@ $(document).ready(function() {
         }
     }
 
-
     function storeCities(){
         localStorage.setItem("cities", JSON.stringify(citiesArray));
     }
-
 
     $("#submitBtn").on("click",function(event){
         event.preventDefault();

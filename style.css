@@ -1,5 +1,5 @@
 body{
-    background-color: #191919 ;
+    background-color: #15580a;
     color: white;
 }
 .main{
@@ -8,8 +8,8 @@ body{
     background-size: cover;
     background-position: center;
     border-radius: 30px;
-    box-shadow:  -20px -20px 40px #0a0a0a, 
-    20px 20px 40px #282828;
+    box-shadow:  -20px -20px 40px #1c700d, 
+    20px 20px 40px #269811;
 }
 
 .btn{
@@ -17,7 +17,7 @@ body{
 }
 
 .card{
-    background-color: #322ac0;
+    background-color: #15580a;
     text-align: center;
     width: 14rem;
     min-width: 10rem;
