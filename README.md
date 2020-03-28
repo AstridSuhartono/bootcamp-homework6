@@ -14,7 +14,7 @@ A third party API is implemented for this application, which is [OpenWeather API
 
 ### Video Recording
 
-Click the following link to see the video demo:
+Click the following link to see the video demo: https://drive.google.com/file/d/1afH7QhUMcNhBX3lTzXpJyC45HmpTm6d6/view
 
 ### How to Start
 
