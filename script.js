@@ -3,7 +3,7 @@ $(document).ready(function() {
     var prevCity = "";
     var citiesArray = [];
     const APIkey = "4ee5795f0338dedf641f1c65d49e8b9c";
-    const openweatherURL = "https://cors-anywhere.herokuapp.com/https://api.openweathermap.org/data/2.5/";
+    const openweatherURL = "https://api.openweathermap.org/data/2.5/";
 
     init();
 
@@ -63,7 +63,7 @@ $(document).ready(function() {
             url: uvURL,
             method: "GET"
             }).then(function(response){
-                let uvi = JSON.stringify(response.value)
+                let uvi = JSON.stringify(response.value);
                 $(".cityUV").text(uvi);
                 createUvLevel(uvi);
             });
@@ -83,21 +83,21 @@ $(document).ready(function() {
 
     function createWeatherIcon(iconCode){
         clearIconCode = iconCode.slice(1, -1);
-        let iconURL = "https://openweathermap.org/img/wn/"+clearIconCode+"@2x.png"
+        let iconURL = "https://openweathermap.org/img/wn/"+clearIconCode+"@2x.png";
         return iconURL;
     }
 
     function createUvLevel(uvIndex){
         if (uvIndex >= 11){
-            $(".uvLevel").text("EXTREME").css("background-color","#B705B7")
+            $(".uvLevel").text("EXTREME").css("background-color","#B705B7");
         }else if (uvIndex >= 8){
-            $(".uvLevel").text("VERY HIGH").css("background-color","#F80101")
+            $(".uvLevel").text("VERY HIGH").css("background-color","#F80101");
         }else if (uvIndex >= 6 ){
-            $(".uvLevel").text("HIGH").css("background-color","#FC840C")
+            $(".uvLevel").text("HIGH").css("background-color","#FC840C");
         }else if (uvIndex >= 3 ){
-            $(".uvLevel").text("MODERATE").css("background-color","#FCFC0C")
+            $(".uvLevel").text("MODERATE").css("background-color","#FCFC0C");
         }else{
-            $(".uvLevel").text("LOW").css("background-color","#108810")
+            $(".uvLevel").text("LOW").css("background-color","#108810");
         }
     }
 
@@ -122,10 +122,10 @@ $(document).ready(function() {
     $("#submitBtn").on("click",function(event){
         event.preventDefault();
         if ($("#city").val() === ""){
-            alert("City search cannot be empty. Please enter a city")
+            alert("City search cannot be empty. Please enter a city");
         }else{
             let city = $("#city").val().trim().toUpperCase();
-            localStorage.setItem("prevCity",JSON.stringify(city));
+            localStorage.setItem("prevCity",city);
             citiesArray.push(city);
             $("#city").val("");
             createApiCall(city);
@@ -137,7 +137,8 @@ $(document).ready(function() {
     $(".citylist").on("click",function(event){
         event.preventDefault();
         let city = $(this).text();
-        localStorage.setItem("prevCity",JSON.stringify(city));
+        console.log(city);
+        localStorage.setItem("prevCity",city);
         createApiCall(city);
     })
 
