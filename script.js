@@ -1,5 +1,6 @@
 $(document).ready(function() {
 
+    var prevCity = "";
     var citiesArray = [];
     const APIkey = "4ee5795f0338dedf641f1c65d49e8b9c";
     const openweatherURL = "https://api.openweathermap.org/data/2.5/";
@@ -8,11 +9,16 @@ $(document).ready(function() {
 
     function init(){
         var storedCities = JSON.parse(localStorage.getItem("cities"));
+        prevCity = localStorage.getItem("prevCity");
+        console.log(prevCity);
         renderDate();
-        if(storedCities !== null){
+        if(storedCities !== null ){
             citiesArray = storedCities;
+            createApiCall(prevCity);
+
         }else{
             citiesArray = new Array();
+            prevCity = "";
             storeCities();
         }
         renderSearchList()
@@ -101,6 +107,20 @@ $(document).ready(function() {
         }
     }
 
+    function createApiCall(city){
+        let queryURL = openweatherURL+"weather?q="+city+"&units=metric&appid="+APIkey;
+        var forecastURL = openweatherURL+"forecast?q="+city+"&units=metric&appid="+APIkey;
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+            }).then(populateWeatherDetail);
+
+        $.ajax({
+            url: forecastURL,
+            method: "GET"
+            }).then(populateWeatherForecast);
+    }
+
     function storeCities(){
         localStorage.setItem("cities", JSON.stringify(citiesArray));
     }
@@ -111,41 +131,19 @@ $(document).ready(function() {
             alert("Please enter a city")
         }
         let city = $("#city").val().trim().toUpperCase();
-        let queryURL = openweatherURL+"weather?q="+city+"&units=metric&appid="+APIkey;
-        var forecastURL = openweatherURL+"forecast?q="+city+"&units=metric&appid="+APIkey;
+        localStorage.setItem("prevCity",city);
         citiesArray.push(city);
         $("#city").val("");
+        createApiCall(city);
         storeCities();
         renderSearchList();
-    
-        // Make the AJAX request to the API - GETs the JSON data at the queryURL.
-        $.ajax({
-            url: queryURL,
-            method: "GET"
-            }).then(populateWeatherDetail);
-
-        $.ajax({
-            url: forecastURL,
-            method: "GET"
-            }).then(populateWeatherForecast);
-
     })
     
     $(".citylist").on("click",function(event){
         event.preventDefault();
         let city = $(this).text();
-        let queryURL = "https://api.openweathermap.org/data/2.5/weather?q="+city+"&units=metric&appid="+APIkey;
-        var forecastURL = "https://api.openweathermap.org/data/2.5/forecast?q="+city+"&units=metric&appid="+APIkey;
-        // Make the AJAX request to the API - GETs the JSON data at the queryURL.
-        $.ajax({
-            url: queryURL,
-            method: "GET"
-            }).then(populateWeatherDetail);
-
-        $.ajax({
-            url: forecastURL,
-            method: "GET"
-            }).then(populateWeatherForecast);
+        localStorage.setItem("prevCity",city);
+        createApiCall(city);
     })
 
     $("#clearBtn").on("click",function(event){
@@ -154,8 +152,7 @@ $(document).ready(function() {
         $("#city").val("");
         localStorage.clear();
         citiesArray = new Array();
+        prevCity = "";
         storeCities();
     }) 
-
-
 });
