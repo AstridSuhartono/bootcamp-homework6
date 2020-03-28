@@ -134,7 +134,7 @@ $(document).ready(function() {
         }
     })
     
-    $(".citylist").on("click",function(event){
+    $(document).on("click",".citylist",function(event){
         event.preventDefault();
         let city = $(this).text();
         console.log(city);
