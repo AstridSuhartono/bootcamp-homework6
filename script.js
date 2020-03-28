@@ -10,7 +10,6 @@ $(document).ready(function() {
     function init(){
         var storedCities = JSON.parse(localStorage.getItem("cities"));
         prevCity = localStorage.getItem("prevCity");
-        //console.log(prevCity);
         renderDate();
         if(storedCities !== null && prevCity !== null){
             citiesArray = storedCities;
@@ -46,7 +45,6 @@ $(document).ready(function() {
     }
 
     function populateWeatherDetail(response){
-        console.log(response);
         $(".cityName").text(JSON.stringify(response.name)+" , "+JSON.stringify(response.sys.country));
         $(".cityTemp").text(JSON.stringify(response.main.temp)+"\xB0C");
         $(".cityFeelTemp").text(JSON.stringify(response.main.feels_like)+"\xB0C");
@@ -54,7 +52,6 @@ $(document).ready(function() {
         $(".cityWind").text(JSON.stringify(response.wind.speed)+" m/sec , " +JSON.stringify(response.wind.deg)+" \xB0");
         $(".cityWeather").text(JSON.stringify(response.weather[0].description));
         let iconCode = JSON.stringify(response.weather[0].icon);
-        //console.log(iconCode);
         let iconURL = createWeatherIcon(iconCode);
         $(".cityIcon").attr("src", iconURL);
 
@@ -66,7 +63,6 @@ $(document).ready(function() {
             url: uvURL,
             method: "GET"
             }).then(function(response){
-                console.log(response);
                 let uvi = JSON.stringify(response.value)
                 $(".cityUV").text(uvi);
                 createUvLevel(uvi);
@@ -74,7 +70,6 @@ $(document).ready(function() {
     }
 
     function populateWeatherForecast(response){
-        console.log(response);
         let index = 1;
         for (i = 8; i < 40; i = i + 8){
             $(".temp"+index).text(JSON.stringify(response.list[i].main.temp)+"\xB0C");
@@ -89,7 +84,6 @@ $(document).ready(function() {
     function createWeatherIcon(iconCode){
         clearIconCode = iconCode.slice(1, -1);
         let iconURL = "https://openweathermap.org/img/wn/"+clearIconCode+"@2x.png"
-        //console.log(iconURL);
         return iconURL;
     }
 
@@ -131,7 +125,7 @@ $(document).ready(function() {
             alert("City search cannot be empty. Please enter a city")
         }else{
             let city = $("#city").val().trim().toUpperCase();
-            localStorage.setItem("prevCity",city);
+            localStorage.setItem("prevCity",JSON.stringify(city));
             citiesArray.push(city);
             $("#city").val("");
             createApiCall(city);
@@ -143,7 +137,7 @@ $(document).ready(function() {
     $(".citylist").on("click",function(event){
         event.preventDefault();
         let city = $(this).text();
-        localStorage.setItem("prevCity",city);
+        localStorage.setItem("prevCity",JSON.stringify(city));
         createApiCall(city);
     })
 
