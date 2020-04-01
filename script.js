@@ -1,5 +1,6 @@
 $(document).ready(function() {
 
+    // declare variables and constant 
     var prevCity = "";
     var citiesArray = [];
     const APIkey = "4ee5795f0338dedf641f1c65d49e8b9c";
@@ -23,6 +24,7 @@ $(document).ready(function() {
         renderSearchList()
     }
 
+    //populate and format the date in the html page
     function renderDate(){
         // Show current day
         var today = moment().format('Do MMMM YYYY');
@@ -35,6 +37,7 @@ $(document).ready(function() {
        
     }
 
+    //create a list of every city that the user search previously
     function renderSearchList(){
         $(".cities").empty();
         for(var i = 0; i < citiesArray.length; i++){
@@ -44,6 +47,7 @@ $(document).ready(function() {
         }
     }
 
+    //function to populate detailed data for the today weather condition
     function populateWeatherDetail(response){
         $(".cityName").text(JSON.stringify(response.name)+" , "+JSON.stringify(response.sys.country));
         $(".cityTemp").text(JSON.stringify(response.main.temp)+"\xB0C");
@@ -69,6 +73,7 @@ $(document).ready(function() {
             });
     }
 
+    //function to populate weather forecast into the card for the next 4 days
     function populateWeatherForecast(response){
         let index = 1;
         for (i = 8; i < 40; i = i + 8){
@@ -81,12 +86,14 @@ $(document).ready(function() {
         }  
     }
 
+    //get the icon to show the weather conditions
     function createWeatherIcon(iconCode){
         clearIconCode = iconCode.slice(1, -1);
         let iconURL = "https://openweathermap.org/img/wn/"+clearIconCode+"@2x.png";
         return iconURL;
     }
 
+    //set background colour for UV Index based on level of the UV 
     function createUvLevel(uvIndex){
         if (uvIndex >= 11){
             $(".uvLevel").text("EXTREME").css("background-color","#B705B7");
@@ -101,6 +108,7 @@ $(document).ready(function() {
         }
     }
 
+    //Getting an AJAX call for the weather condition from the openweathermap API
     function createApiCall(city){
         let queryURL = openweatherURL+"weather?q="+city+"&units=metric&appid="+APIkey;
         var forecastURL = openweatherURL+"forecast?q="+city+"&units=metric&appid="+APIkey;
@@ -115,10 +123,12 @@ $(document).ready(function() {
             }).then(populateWeatherForecast);
     }
 
+    //save searched cities into local storage
     function storeCities(){
         localStorage.setItem("cities", JSON.stringify(citiesArray));
     }
 
+    //function that is called when user click the search button
     $("#submitBtn").on("click",function(event){
         event.preventDefault();
         if ($("#city").val() === ""){
@@ -134,6 +144,7 @@ $(document).ready(function() {
         }
     })
     
+    //function to populate weather condition based on a list of cities that has been searched by user
     $(document).on("click",".citylist",function(event){
         event.preventDefault();
         let city = $(this).text();
@@ -142,6 +153,7 @@ $(document).ready(function() {
         createApiCall(city);
     })
 
+    //clear the local storage and empty the city list text
     $("#clearBtn").on("click",function(event){
         event.preventDefault();
         $(".cities").empty();
